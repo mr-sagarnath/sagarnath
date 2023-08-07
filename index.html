@@ -1,48 +1,64 @@
-<html><head>
-<title>Sagar</title></head>
-  <style>
-    body {
-      background-color: lightblue;
-      font-family: Arial, sans-serif;
-    }
-    h1 {
-      color: darkblue;
-      text-align: center;
-    }
-        h2 {
-      color: darkblue;
-      text-align: center;
-    }
-        h3 {
-      color: darkblue;
-      text-align: center;
-    }
-        h4 {
-      color: darkblue;
-      text-align: center;
-    }
-        h5 {
-      color: darkblue;
-      text-align: center;
-    }
-    p {
-      color: black;
-    }
-  </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+  }
+  canvas {
+    display: block;
+  }
+</style>
+<title>Bouncing Ball Game</title>
+</head>
 <body>
-   <marquee behavior="scroll" direction="left" scrollamount="10">
-   <h1>Sagar N Tiwari </h1>
-  </marquee>
-  <marquee behavior="scroll" direction="right" scrollamount="10">
-   <h2>Sagar N Tiwari </h2>
-  </marquee>
-  <marquee behavior="scroll" direction="left" scrollamount="10">
-   <h3>Sagar N Tiwari </h3>
-    <marquee behavior="scroll" direction="right" scrollamount="10">
-   <h4>Sagar N Tiwari </h4>
-  </marquee>
-    <marquee behavior="scroll" direction="left" scrollamount="10">
-   <h5>Sagar N Tiwari </h5>
-  </marquee>
-  </body>
+<canvas id="gameCanvas"></canvas>
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const ball = {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    radius: 30,
+    dx: 5,
+    dy: 5
+  };
+
+  function drawBall() {
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+    ctx.fillStyle = 'blue';
+    ctx.fill();
+    ctx.closePath();
+  }
+
+  function updateBallPosition() {
+    if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+      ball.dx = -ball.dx;
+    }
+    if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+      ball.dy = -ball.dy;
+    }
+
+    ball.x += ball.dx;
+    ball.y += ball.dy;
+  }
+
+  function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBall();
+    updateBallPosition();
+    requestAnimationFrame(gameLoop);
+  }
+
+  gameLoop();
+</script>
+</body>
 </html>
